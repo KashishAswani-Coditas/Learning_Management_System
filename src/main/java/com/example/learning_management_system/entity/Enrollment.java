@@ -26,7 +26,7 @@ public class Enrollment {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private Course courseID;
+    private Course course;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;

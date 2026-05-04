@@ -20,7 +20,7 @@ public class Assessment {
 
     @ManyToOne
     @JoinColumn(name = "enrollment_id" )
-    private Enrollment enrollmentID;
+    private Enrollment enrollment;
 
     @Enumerated(EnumType.STRING)
     private AssessmentStatus assessmentStatus;
