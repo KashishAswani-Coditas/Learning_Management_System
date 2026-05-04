@@ -16,7 +16,7 @@ public class Assessment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "enrollment_id" )

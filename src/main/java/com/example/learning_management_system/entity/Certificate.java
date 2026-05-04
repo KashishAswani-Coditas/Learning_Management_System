@@ -16,7 +16,7 @@ public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     //belongs to which employee
     @ManyToOne

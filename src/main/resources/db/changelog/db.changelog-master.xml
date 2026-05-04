@@ -9,7 +9,7 @@
 <!--    EMPLOYEE TABLE-->
     <changeSet id="1" author="kashish">
         <createTable tableName="employee">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="first_name" type="VARCHAR(50)"/>
@@ -37,7 +37,7 @@
 <!--    ADMIN TABLE-->
     <changeSet id="3" author="kashish">
         <createTable tableName="admin">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="first_name" type="VARCHAR(50)"/>
@@ -52,7 +52,7 @@
 <!--    COURSE TABLE-->
     <changeSet id="4" author="kashish">
         <createTable tableName="course">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(100)"/>
@@ -64,7 +64,7 @@
 <!--    MODULE TABLE-->
     <changeSet id="5" author="kashish">
         <createTable tableName="module">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(100)"/>
@@ -86,7 +86,7 @@
 <!--    YouTube links for module-->
     <changeSet id="7" author="kashish">
         <createTable tableName="module_youtube_links">
-            <column name="module_id" type="UUID"/>
+            <column name="module_id" type="VARCHAR(50)"/>
             <column name="youtube_link" type="VARCHAR(200)"/>
         </createTable>
     </changeSet>
@@ -103,7 +103,7 @@
 <!--    ENROLLMENT table-->
     <changeSet id="9" author="kashish">
         <createTable tableName="enrollment">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="employee_id" type="UUID"/>
@@ -138,7 +138,7 @@
 <!--    Assessment table-->
     <changeSet id="12" author="kashish">
         <createTable tableName="assessment">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="enrollment_id" type="UUID"/>
@@ -160,7 +160,7 @@
 
     <changeSet id="14" author="kashish">
         <createTable tableName="certificate">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="employee_id" type="UUID"/>
