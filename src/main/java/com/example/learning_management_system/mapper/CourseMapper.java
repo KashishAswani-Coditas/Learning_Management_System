@@ -1,0 +1,12 @@
+package com.example.learning_management_system.mapper;
+
+import com.example.learning_management_system.dto.requestDTO.CourseRequestDTO;
+import com.example.learning_management_system.dto.responseDTO.CourseResponseDTO;
+import com.example.learning_management_system.entity.Course;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface CourseMapper {
+    Course toEntity(CourseRequestDTO courseRequestDTO);
+    CourseResponseDTO toDto(Course course);
+}
