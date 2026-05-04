@@ -5,4 +5,188 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+
+<!--    EMPLOYEE TABLE-->
+    <changeSet id="1" author="kashish">
+        <createTable tableName="employee">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(150)">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(200)"/>
+            <column name="manager_id" type="UUID"/>
+            <column name="hire_date" type="DATE"/>
+            <column name="on_bench" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+<!--    FK for EMPLOYEE-->
+    <changeSet id="2" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="employee"
+                baseColumnNames="manager_id"
+                referencedTableName="employee"
+                referencedColumnNames="id"
+                constraintName="fk_employee_manager"/>
+    </changeSet>
+
+<!--    ADMIN TABLE-->
+    <changeSet id="3" author="kashish">
+        <createTable tableName="admin">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(150)">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(250)"/>
+        </createTable>
+    </changeSet>
+
+<!--    COURSE TABLE-->
+    <changeSet id="4" author="kashish">
+        <createTable tableName="course">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="days_required" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+<!--    MODULE TABLE-->
+    <changeSet id="5" author="kashish">
+        <createTable tableName="module">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="course_id" type="UUID"/>
+            <column name="completion_status" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+<!--FK for module-->
+    <changeSet id="6" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="module"
+                baseColumnNames="course_id"
+                referencedTableName="course"
+                referencedColumnNames="id"
+                constraintName="fk_module_course"/>
+    </changeSet>
+
+<!--    YouTube links for module-->
+    <changeSet id="7" author="kashish">
+        <createTable tableName="module_youtube_links">
+            <column name="module_id" type="UUID"/>
+            <column name="youtube_link" type="VARCHAR(200)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="module_youtube_links"
+                baseColumnNames="module_id"
+                referencedTableName="module"
+                referencedColumnNames="id"
+                constraintName="fk_module_links"/>
+    </changeSet>
+
+<!--    ENROLLMENT table-->
+    <changeSet id="9" author="kashish">
+        <createTable tableName="enrollment">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="employee_id" type="UUID"/>
+            <column name="course_id" type="UUID"/>
+            <column name="start_date" type="TIMESTAMP"/>
+            <column name="end_date" type="TIMESTAMP"/>
+            <column name="progress" type="BIGINT"/>
+            <column name="status" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+<!--    FK with Employee-->
+    <changeSet id="10" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="enrollment"
+                baseColumnNames="employee_id"
+                referencedTableName="employee"
+                referencedColumnNames="id"
+                constraintName="fk_enrollment_employee"/>
+    </changeSet>
+
+<!--    Fk with course table-->
+    <changeSet id="11" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="enrollment"
+                baseColumnNames="course_id"
+                referencedTableName="course"
+                referencedColumnNames="id"
+                constraintName="fk_enrollment_course"/>
+    </changeSet>
+
+<!--    Assessment table-->
+    <changeSet id="12" author="kashish">
+        <createTable tableName="assessment">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="enrollment_id" type="UUID"/>
+            <column name="assessment_status" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+<!--    Fk for assessment table with enrollment-->
+    <changeSet id="13" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="assessment"
+                baseColumnNames="enrollment_id"
+                referencedTableName="enrollment"
+                referencedColumnNames="id"
+                constraintName="fk_assessment_enrollment"/>
+    </changeSet>
+
+<!--    Certificate table-->
+
+    <changeSet id="14" author="kashish">
+        <createTable tableName="certificate">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="employee_id" type="UUID"/>
+            <column name="course_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+
+
+<!--    FK of certificate with employee-->
+    <changeSet id="15" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="certificate"
+                baseColumnNames="employee_id"
+                referencedTableName="employee"
+                referencedColumnNames="id"
+                constraintName="fk_certificate_employee"/>
+    </changeSet>
+
+<!--    Fk of certificate with course-->
+    <changeSet id="16" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="certificate"
+                baseColumnNames="course_id"
+                referencedTableName="course"
+                referencedColumnNames="id"
+                constraintName="fk_certificate_course"/>
+    </changeSet>
+
 </databaseChangeLog>

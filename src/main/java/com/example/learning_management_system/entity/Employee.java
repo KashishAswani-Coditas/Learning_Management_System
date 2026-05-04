@@ -34,7 +34,7 @@ public class Employee {
     private Employee manager;
 
     @OneToMany(mappedBy = "manager")
-    private List<Employee> subordinated;
+    private List<Employee> subordinates;
 
     @Column(name = "hire_date")
     private LocalDate hireDate;
