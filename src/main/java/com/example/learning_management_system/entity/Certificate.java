@@ -1,6 +1,6 @@
 package com.example.learning_management_system.entity;
 
-import com.example.learning_management_system.enums.AssessmentStatus;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,17 +11,20 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "assessment")
-public class Assessment {
+@Table(name = "certificate")
+public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    //belongs to which employee
     @ManyToOne
-    @JoinColumn(name = "enrollment_id" )
-    private Enrollment enrollmentID;
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
-    @Enumerated(EnumType.STRING)
-    private AssessmentStatus assessmentStatus;
+    //belongs to which course
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 }
