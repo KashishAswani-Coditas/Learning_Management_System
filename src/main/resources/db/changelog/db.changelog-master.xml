@@ -221,4 +221,10 @@
     <changeSet id="remove-progress-column" author="kashish">
         <dropColumn tableName="enrollment" columnName="progress"/>
     </changeSet>
+
+    <changeSet id="add-issued-date-to-certificate" author="kashish">
+        <addColumn tableName="certificate">
+            <column name="issued_date" type="TIMESTAMP"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

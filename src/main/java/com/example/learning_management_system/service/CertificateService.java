@@ -8,6 +8,7 @@ import com.example.learning_management_system.entity.Employee;
 import com.example.learning_management_system.entity.Enrollment;
 import com.example.learning_management_system.enums.AssessmentStatus;
 import com.example.learning_management_system.enums.ProgressStatus;
+import com.example.learning_management_system.mapper.CertificateMapper;
 import com.example.learning_management_system.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +27,9 @@ public class CertificateService {
     private final EmployeeRepository employeeRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final AssessmentRepository assessmentRepository;
+    private final CertificateMapper certificateMapper;
 
-    private CertificateResponseDTO generateCertificate(String courseId){
+    public CertificateResponseDTO generateCertificate(String courseId){
         String email = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getName();
@@ -93,7 +95,8 @@ public class CertificateService {
 
         return certificateRepository.findByEmployeeId(employee.getId())
                 .stream()
-                .map(this::)
+                .map(certificateMapper::toDto)
+                .toList();
     }
 
 }
