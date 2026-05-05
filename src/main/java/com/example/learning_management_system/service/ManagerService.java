@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,13 +50,29 @@ public class ManagerService {
 
     }
 
-//    //get all subordinates
-//    public List<ManagerEmployeeViewDTO> getAllSubordinates(){
-//        Employee manager = getLoggedManager();
-//
-//        List<Employee> employees = employeeRepository.findByManagerId(manager.getId());
-//
-//    }
+    //get all subordinates
+    public List<ManagerEmployeeViewDTO> getAllSubordinates(){
+        Employee manager = getLoggedManager();
+
+        List<Employee> employees = employeeRepository.findByManagerId(manager.getId());
+
+        List<ManagerEmployeeViewDTO> result = new ArrayList<>();
+
+        for(Employee e: employees){
+            List<Enrollment> enrollments = enrollmentRepository.findByEmployeeId(e.getId());
+
+            Enrollment latest = null;
+            if(!enrollments.isEmpty()){
+                latest = enrollments.get(enrollments.size()-1);
+            }
+
+            ManagerEmployeeViewDTO dto = mapper.toDTO(e, latest);
+            result.add(dto);
+        }
+
+        return result;
+
+    }
 
     private Employee getLoggedManager(){
         String email = SecurityContextHolder.getContext()

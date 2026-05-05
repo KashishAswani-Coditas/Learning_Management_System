@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/manager")
 @RequiredArgsConstructor
@@ -18,5 +20,10 @@ public class ManagerController {
     @GetMapping("/employee/{id}")
     public ManagerEmployeeViewDTO getEmployee(@PathVariable String id){
         return managerService.getEmployee(id);
+    }
+
+    @GetMapping("/subordinates")
+    public List<ManagerEmployeeViewDTO> getSubordinates(){
+        return managerService.getAllSubordinates();
     }
 }
