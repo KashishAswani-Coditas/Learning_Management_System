@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -26,7 +25,7 @@ public class Course {
     private Long daysRequired;
 
     @OneToMany(mappedBy = "course")
-    private List<Module> modules;
+    private List<CourseModule> modules;
 
     @OneToMany(mappedBy = "course")
     private List<Enrollment> enrollments;

@@ -22,7 +22,7 @@ public class ModuleProgress {
 
     @ManyToOne
     @JoinColumn(name = "module_id")
-    private Module module;
+    private CourseModule module;
 
     //need to set the default value as Not_started
     @Column(name = "status")

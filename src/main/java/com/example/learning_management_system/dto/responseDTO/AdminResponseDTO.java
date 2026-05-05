@@ -13,4 +13,7 @@ public class AdminResponseDTO {
     private String lastName;
 
     private String email;
+
+    public static class ModuleResponseDTO {
+    }
 }

@@ -18,7 +18,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="password" type="VARCHAR(200)"/>
-            <column name="manager_id" type="UUID"/>
+            <column name="manager_id" type="VARCHAR(50)"/>
             <column name="hire_date" type="DATE"/>
             <column name="on_bench" type="BOOLEAN"/>
         </createTable>
@@ -67,9 +67,8 @@
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(100)"/>
-            <column name="course_id" type="UUID"/>
-            <column name="completion_status" type="BOOLEAN"/>
+            <column name="module_name" type="VARCHAR(100)"/>
+            <column name="course_id" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
 
@@ -106,8 +105,8 @@
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="employee_id" type="UUID"/>
-            <column name="course_id" type="UUID"/>
+            <column name="employee_id" type="VARCHAR(50)"/>
+            <column name="course_id" type="VARCHAR(50)"/>
             <column name="start_date" type="TIMESTAMP"/>
             <column name="end_date" type="TIMESTAMP"/>
             <column name="progress" type="BIGINT"/>
@@ -141,7 +140,7 @@
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="enrollment_id" type="UUID"/>
+            <column name="enrollment_id" type="VARCHAR(50)"/>
             <column name="assessment_status" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
@@ -163,8 +162,8 @@
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="employee_id" type="UUID"/>
-            <column name="course_id" type="UUID"/>
+            <column name="employee_id" type="VARCHAR(50)"/>
+            <column name="course_id" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
 
@@ -189,4 +188,33 @@
                 constraintName="fk_certificate_course"/>
     </changeSet>
 
+<!--    Adding new for the module progress table-->
+    <changeSet id="17" author="kashish">
+        <createTable tableName="module_progress">
+            <column name="id" type="VARCHAR(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="employee_id" type="VARCHAR(50)"/>
+            <column name="module_id" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="18" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="module_progress"
+                baseColumnNames="employee_id"
+                referencedTableName="employee"
+                referencedColumnNames="id"
+                constraintName="fk_module_progress_employee"/>
+    </changeSet>
+
+    <changeSet id="19" author="kashish">
+        <addForeignKeyConstraint
+                baseTableName="module_progress"
+                baseColumnNames="module_id"
+                referencedTableName="module"
+                referencedColumnNames="id"
+                constraintName="fk_module_progress_module"/>
+    </changeSet>
 </databaseChangeLog>

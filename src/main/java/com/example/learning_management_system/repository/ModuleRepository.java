@@ -1,8 +1,9 @@
 package com.example.learning_management_system.repository;
 
+import com.example.learning_management_system.entity.CourseModule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ModuleRepository extends JpaRepository<Module, String> {
+public interface ModuleRepository extends JpaRepository<CourseModule, String> {
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter @Setter
 @Table(name = "module")
-public class Module {
+public class CourseModule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,11 +27,7 @@ public class Module {
 
     @ElementCollection
     @CollectionTable(name = "module_youtube_links", joinColumns = @JoinColumn(name = "module_id"))
-    @Column(name = "youtube_links")
-    private List<String> youtubeLinks;
-
-    @Column(name = "completion_status")
-    private boolean completionStatus;
-
+    @Column(name = "youtube_link")
+    private List<String> youtubeLink;
 
 }
