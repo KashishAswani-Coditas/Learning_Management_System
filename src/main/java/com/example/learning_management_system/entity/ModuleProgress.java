@@ -13,7 +13,6 @@ import lombok.*;
 public class ModuleProgress {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

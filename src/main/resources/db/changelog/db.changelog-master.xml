@@ -217,4 +217,8 @@
                 referencedColumnNames="id"
                 constraintName="fk_module_progress_module"/>
     </changeSet>
+
+    <changeSet id="remove-progress-column" author="kashish">
+        <dropColumn tableName="enrollment" columnName="progress"/>
+    </changeSet>
 </databaseChangeLog>

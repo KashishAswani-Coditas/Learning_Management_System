@@ -3,7 +3,11 @@ package com.example.learning_management_system.service;
 import com.example.learning_management_system.dto.requestDTO.EnrollmentRequestDTO;
 import com.example.learning_management_system.dto.responseDTO.EnrollmentResponseDTO;
 import com.example.learning_management_system.entity.Admin;
+import com.example.learning_management_system.entity.Course;
 import com.example.learning_management_system.entity.Employee;
+import com.example.learning_management_system.entity.Enrollment;
+import com.example.learning_management_system.enums.ProgressStatus;
+import com.example.learning_management_system.mapper.EnrollmentMapper;
 import com.example.learning_management_system.repository.AdminRepository;
 import com.example.learning_management_system.repository.CourseRepository;
 import com.example.learning_management_system.repository.EmployeeRepository;
@@ -12,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class EnrollmentService {
@@ -19,10 +26,11 @@ public class EnrollmentService {
     private final EmployeeRepository employeeRepository;
     private final CourseRepository courseRepository;
     private final AdminRepository adminRepository;
+    private final EnrollmentMapper enrollmentMapper;
 
 
     //enroll
-    private EnrollmentResponseDTO enroll(EnrollmentRequestDTO requestDTO){
+    public EnrollmentResponseDTO enroll(EnrollmentRequestDTO requestDTO){
 
         //get the user who is logged in
         String  email = SecurityContextHolder.getContext()
@@ -45,5 +53,43 @@ public class EnrollmentService {
         // authorization logic
         boolean isAllowed = false;
 
+        if(admin != null){
+            isAllowed = true;
+        }else if (loggedEmployee != null){
+            //need to check if the employee is the employee itself or the manager
+            if(loggedEmployee.getId().equals(targetedEmployee.getId())){
+                //that means it is employee itself
+                isAllowed = true;
+            } else if (targetedEmployee.getManager() != null && targetedEmployee.getManager().getId().equals(loggedEmployee.getManager().getId())) {
+                isAllowed = true;
+            }
+        }
+
+        if(!isAllowed){
+            throw new RuntimeException("Unauthorised enrollment attempt..");
+        }
+
+        //check if enrollment already exists
+        if (enrollmentRepository.existsByEmployeeIdAndCourseId(targetedEmployee.getId(), requestDTO.getCourseId())){
+            throw new RuntimeException("Enrollment already exists!!!");
+        }
+
+        //create enrollment
+
+        //fetch the course
+        Course course = courseRepository.findById(requestDTO.getCourseId())
+                .orElseThrow(() -> new RuntimeException("Course you are looking for does not exists"));
+
+        Enrollment newEnrollment = Enrollment.builder()
+                .id(UUID.randomUUID().toString())
+                .employee(targetedEmployee)
+                .course(course)
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now().plusDays(course.getDaysRequired()))
+                .status(ProgressStatus.NOT_STARTED)
+                .build();
+
+        return enrollmentMapper.toDto(enrollmentRepository.save(newEnrollment));
     }
+
 }

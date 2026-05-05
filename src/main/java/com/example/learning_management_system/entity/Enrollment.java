@@ -32,8 +32,6 @@ public class Enrollment {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    private Long progress;
-
     @Enumerated(EnumType.STRING)
     private ProgressStatus status;
 
