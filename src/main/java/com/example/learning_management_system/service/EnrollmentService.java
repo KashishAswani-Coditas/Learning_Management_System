@@ -85,7 +85,6 @@ public class EnrollmentService {
                 .employee(targetedEmployee)
                 .course(course)
                 .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusDays(course.getDaysRequired()))
                 .status(ProgressStatus.NOT_STARTED)
                 .build();
 

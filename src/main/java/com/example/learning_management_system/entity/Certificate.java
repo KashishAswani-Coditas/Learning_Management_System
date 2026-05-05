@@ -4,6 +4,7 @@ package com.example.learning_management_system.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -26,4 +27,7 @@ public class Certificate {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @Column(name = "issued_date")
+    private LocalDateTime issueDate;
 }
