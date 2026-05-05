@@ -21,7 +21,6 @@ public class CourseRequestDTO {
     @Size(min = 15, message = "Description can't be blank should be of minimum 15 characters")
     private String description;
 
-    @NotEmpty(message = "Days required can't be empty")
     private Long daysRequired;
 
 }

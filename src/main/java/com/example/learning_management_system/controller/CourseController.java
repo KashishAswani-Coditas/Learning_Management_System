@@ -3,20 +3,18 @@ package com.example.learning_management_system.controller;
 import com.example.learning_management_system.dto.requestDTO.CourseRequestDTO;
 import com.example.learning_management_system.dto.responseDTO.CourseResponseDTO;
 import com.example.learning_management_system.service.CourseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/course")
 @RequiredArgsConstructor
 public class CourseController {
 
     private final CourseService courseService;
 
-    @PostMapping("/add-course")
-    public CourseResponseDTO addCourse(CourseRequestDTO course){
-        return courseService.addCourse(course);
-    }
+
 
     @GetMapping("/get-course/{id}")
     public CourseResponseDTO getCourse(@PathVariable String id){

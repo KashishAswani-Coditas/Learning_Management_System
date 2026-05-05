@@ -15,7 +15,6 @@ import java.util.List;
 public class CourseModule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(name = "module_name")

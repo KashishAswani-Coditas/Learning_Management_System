@@ -9,6 +9,8 @@ import com.example.learning_management_system.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CourseService {
@@ -16,8 +18,9 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
-    public CourseResponseDTO addCourse(CourseRequestDTO course) {
-        Course originalCourse = courseMapper.toEntity(course);
+    public CourseResponseDTO addCourse(CourseRequestDTO courseDto) {
+        Course originalCourse = courseMapper.toEntity(courseDto);
+        originalCourse.setId(UUID.randomUUID().toString());
         return courseMapper.toDto(courseRepository.save(originalCourse));
     }
 

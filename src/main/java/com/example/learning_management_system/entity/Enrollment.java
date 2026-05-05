@@ -16,7 +16,6 @@ import java.util.List;
 public class Enrollment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

@@ -15,7 +15,6 @@ import java.util.UUID;
 public class Assessment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

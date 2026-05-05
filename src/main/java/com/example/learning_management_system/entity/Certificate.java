@@ -15,7 +15,6 @@ import java.util.UUID;
 public class Certificate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     //belongs to which employee
