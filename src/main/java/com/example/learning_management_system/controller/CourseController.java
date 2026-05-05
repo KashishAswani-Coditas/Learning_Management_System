@@ -1,11 +1,12 @@
 package com.example.learning_management_system.controller;
 
-import com.example.learning_management_system.dto.requestDTO.CourseRequestDTO;
 import com.example.learning_management_system.dto.responseDTO.CourseResponseDTO;
+import com.example.learning_management_system.dto.responseDTO.ModuleResponseDTO;
 import com.example.learning_management_system.service.CourseService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/course")
@@ -14,17 +15,28 @@ public class CourseController {
 
     private final CourseService courseService;
 
+//    all courses
+    @GetMapping("/all")
+    public List<CourseResponseDTO> getAllCourse(){
+        return courseService.getAllCourses();
+    }
 
+//    course with modules
+    @GetMapping("/{id}")
+    public CourseResponseDTO getCourseById(@PathVariable String id){
+        return courseService.getCourseById(id);
+    }
 
-    @GetMapping("/get-course/{id}")
-    public CourseResponseDTO getCourse(@PathVariable String id){
-        return courseService.getCourse(id);
+//    get modules of a course
+    @GetMapping("/{id}/modules")
+    public List<ModuleResponseDTO> getModules(@PathVariable String id){
+        return courseService.getModulesByCourseId(id);
     }
 
 
-
-
-//    Delete course should be allowed or not??? cause may lead to inconsistency od data for those who have already completed...
-//    Need to decide this
-//    @DeleteMapping("/remove-course")
+//    get single module
+    @GetMapping("/module/{moduleId}")
+    public ModuleResponseDTO getModule(@PathVariable String moduleId){
+        return courseService.getModule(moduleId);
+    }
 }

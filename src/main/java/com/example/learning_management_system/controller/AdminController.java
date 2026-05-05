@@ -40,8 +40,18 @@ public class AdminController {
         return courseService.addCourse(course);
     }
 
+    @PutMapping("/update-course/{id}")
+    private CourseResponseDTO updateCourse(@PathVariable String id, @Valid @RequestBody CourseRequestDTO courseDto){
+        return courseService.updateCourse(id, courseDto);
+    }
+
+//    Module controls
     @PostMapping("/course/{courseId}/add-module")
-    private ModuleResponseDTO addModule(@PathVariable String courseId, @RequestBody ModuleRequestDTO moduleRequestDTO){
+    private ModuleResponseDTO addModule(@PathVariable String courseId, @Valid @RequestBody ModuleRequestDTO moduleRequestDTO){
         return moduleService.addModule(courseId, moduleRequestDTO);
+    }
+    @PutMapping("/module/update/{moduleId}")
+    private ModuleResponseDTO updateModule(@PathVariable String moduleId,@Valid @RequestBody ModuleRequestDTO moduleRequestDTO){
+        return moduleService.updateModule(moduleId, moduleRequestDTO);
     }
 }

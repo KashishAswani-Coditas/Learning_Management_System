@@ -33,4 +33,18 @@ public class ModuleService {
 
         return moduleMapper.toDto(module);
     }
+
+    public ModuleResponseDTO updateModule(String moduleId, ModuleRequestDTO moduleRequestDTO) {
+        CourseModule module = moduleRepository.findById(moduleId)
+                .orElseThrow(() -> new RuntimeException("Module Not Found"));
+
+        if(moduleRequestDTO.getModuleName() != null){
+            module.setModuleName(moduleRequestDTO.getModuleName());
+        }
+        if(moduleRequestDTO.getYoutubeLinks() != null){
+            module.setYoutubeLink(moduleRequestDTO.getYoutubeLinks());
+        }
+
+        return moduleMapper.toDto(moduleRepository.save(module));
+    }
 }
