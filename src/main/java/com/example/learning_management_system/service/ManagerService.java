@@ -20,17 +20,8 @@ import java.util.List;
 public class ManagerService {
     private final EmployeeRepository employeeRepository;
     private final EnrollmentRepository enrollmentRepository;
-    private  final ManagerMapper mapper;
+    private final ManagerMapper mapper;
 
-//    public List<ManagerEmployeeViewDTO> filterDashboard(ManagerFilterDTO filter){
-//        Employee manager = getLoggedManager();
-//
-//        List<Employee> employees = employeeRepository.findByManagerId(manager.getId());
-//
-//        return employees.stream()
-//                .filter(employee -> filter.getOnBench() == null|| employee.isOnBench() == filter.getOnBench())
-//                .map(employee -> )
-//    }
 
     public ManagerEmployeeViewDTO getEmployee(String employeeId) {
         Employee manager = getLoggedManager();
@@ -44,26 +35,26 @@ public class ManagerService {
 
         List<Enrollment> enrollments = enrollmentRepository.findByEmployeeId(employee.getId());
 
-        Enrollment latest = enrollments.isEmpty() ? null : enrollments.get(enrollments.size()-1);
+        Enrollment latest = enrollments.isEmpty() ? null : enrollments.get(enrollments.size() - 1);
 
         return mapper.toDTO(employee, latest);
 
     }
 
     //get all subordinates
-    public List<ManagerEmployeeViewDTO> getAllSubordinates(){
+    public List<ManagerEmployeeViewDTO> getAllSubordinates() {
         Employee manager = getLoggedManager();
 
         List<Employee> employees = employeeRepository.findByManagerId(manager.getId());
 
         List<ManagerEmployeeViewDTO> result = new ArrayList<>();
 
-        for(Employee e: employees){
+        for (Employee e : employees) {
             List<Enrollment> enrollments = enrollmentRepository.findByEmployeeId(e.getId());
 
             Enrollment latest = null;
-            if(!enrollments.isEmpty()){
-                latest = enrollments.get(enrollments.size()-1);
+            if (!enrollments.isEmpty()) {
+                latest = enrollments.get(enrollments.size() - 1);
             }
 
             ManagerEmployeeViewDTO dto = mapper.toDTO(e, latest);
@@ -74,7 +65,48 @@ public class ManagerService {
 
     }
 
-    private Employee getLoggedManager(){
+    public List<ManagerEmployeeViewDTO> filterEmployees(ManagerFilterDTO filterDTO) {
+        Employee manager = getLoggedManager();
+
+        List<Employee> employees = employeeRepository.findByManagerId(manager.getId());
+
+        List<ManagerEmployeeViewDTO> result = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            List<Enrollment> enrollments = enrollmentRepository.findByEmployeeId(employee.getId());
+
+            Enrollment latestEnrollment = enrollments.isEmpty() ? null : enrollments.get(enrollments.size() - 1);
+
+            ManagerEmployeeViewDTO viewDTO = mapper.toDTO(employee, latestEnrollment);
+
+            boolean matches =
+                    (filterDTO.getOnBench() == null ||
+                            viewDTO.isOnBench() == filterDTO.getOnBench())
+
+                            &&
+
+                            (filterDTO.getEnrolled() == null ||
+                                    viewDTO.isEnrolled() == filterDTO.getEnrolled())
+
+                            &&
+
+                            (filterDTO.getCourseId() == null ||
+                                    filterDTO.getCourseId().equals(viewDTO.getCourseId()))
+
+                            &&
+
+                            (filterDTO.getStatus() == null ||
+                                    filterDTO.getStatus() == viewDTO.getStatus());
+
+            if (matches) {
+                result.add(viewDTO);
+            }
+        }
+
+        return result;
+    }
+
+    private Employee getLoggedManager() {
         String email = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getName();
@@ -82,6 +114,4 @@ public class ManagerService {
         return employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Manager Not Found!!"));
     }
-
-
 }

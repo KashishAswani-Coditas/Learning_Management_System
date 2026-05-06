@@ -2,12 +2,10 @@ package com.example.learning_management_system.controller;
 
 
 import com.example.learning_management_system.dto.requestDTO.ManagerEmployeeViewDTO;
+import com.example.learning_management_system.dto.requestDTO.ManagerFilterDTO;
 import com.example.learning_management_system.service.ManagerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,10 @@ public class ManagerController {
     @GetMapping("/subordinates")
     public List<ManagerEmployeeViewDTO> getSubordinates(){
         return managerService.getAllSubordinates();
+    }
+
+    @PostMapping("/dashboard/filter")
+    public List<ManagerEmployeeViewDTO> filterEmployee(@RequestBody ManagerFilterDTO filterDTO){
+        return managerService.filterEmployees(filterDTO);
     }
 }
