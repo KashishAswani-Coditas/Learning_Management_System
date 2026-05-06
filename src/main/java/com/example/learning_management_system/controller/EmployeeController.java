@@ -1,5 +1,6 @@
 package com.example.learning_management_system.controller;
 
+import com.example.learning_management_system.dto.responseDTO.CertificateResponseDTO;
 import com.example.learning_management_system.dto.responseDTO.CourseResponseDTO;
 import com.example.learning_management_system.dto.responseDTO.ModuleProgressResponseDTO;
 import com.example.learning_management_system.entity.Course;
@@ -7,6 +8,7 @@ import com.example.learning_management_system.entity.Employee;
 import com.example.learning_management_system.entity.Enrollment;
 import com.example.learning_management_system.mapper.CourseMapper;
 import com.example.learning_management_system.repository.EnrollmentRepository;
+import com.example.learning_management_system.service.CertificateService;
 import com.example.learning_management_system.service.ModuleProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -44,16 +46,18 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("/my-progress/{courseId}")
-//    public List<ModuleProgressResponseDTO> getMyProgress(
-//            @PathVariable String courseId,
-//            Authentication authentication
-//    ){
-//
-//        return progressService.getCourseProgress(
-//                authentication.getName(),
-//                courseId
-//        );
-//    }
+    private final CertificateService certificateService;
+
+    // get employee certificates
+    @GetMapping("/my-certificates")
+    public List<CertificateResponseDTO> getMyCertificates() {
+        return certificateService.getMyCertificates();
+    }
+
+    // get module-wise progress of a course
+    @GetMapping("/my-progress/{courseId}")
+    public List<ModuleProgressResponseDTO> getMyProgress(@PathVariable String courseId) {
+        return moduleProgressService.getMyProgress(courseId);
+    }
 
 }

@@ -100,4 +100,37 @@ public class ModuleProgressService {
 
         enrollmentRepository.save(enrollment);
     }
+
+
+    public List<ModuleProgressResponseDTO> getMyProgress(String courseId){
+
+        // logged in employee
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        // check enrollment
+        enrollmentRepository.findByEmployeeIdAndCourseId(
+                employee.getId(),
+                courseId
+        ).orElseThrow(() -> new RuntimeException("You are not enrolled in this course"));
+
+        // fetch progress
+        return moduleProgressRepository
+                .findByEmployeeIdAndModule_Course_Id(
+                        employee.getId(),
+                        courseId
+                )
+                .stream()
+                .map(progress -> ModuleProgressResponseDTO.builder()
+                        .id(progress.getId())
+                        .employeeId(employee.getId())
+                        .moduleId(progress.getModule().getId())
+                        .status(progress.getStatus())
+                        .build())
+                .toList();
+    }
 }

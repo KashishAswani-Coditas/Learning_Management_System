@@ -25,5 +25,6 @@ public class ModuleProgress {
 
     //need to set the default value as Not_started
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ProgressStatus status;
 }
