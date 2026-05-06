@@ -14,4 +14,6 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 
     @Query("SELECT c FROM Course c LEFT JOIN FETCH c.modules WHERE c.id = :id")
     Optional<Course> findByIdWithModules(@Param("id") String id);
+
+    boolean existsByName(String string);
 }

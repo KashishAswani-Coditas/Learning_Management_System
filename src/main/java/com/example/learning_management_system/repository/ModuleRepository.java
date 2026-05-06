@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ModuleRepository extends JpaRepository<CourseModule, String> {
     List<CourseModule> findByCourseId(String id);
+
+    boolean existsByModuleNameAndCourseId(String moduleName, String courseId);
 }

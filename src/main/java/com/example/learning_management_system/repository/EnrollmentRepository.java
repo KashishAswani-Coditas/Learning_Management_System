@@ -1,5 +1,6 @@
 package com.example.learning_management_system.repository;
 
+import com.example.learning_management_system.entity.Employee;
 import com.example.learning_management_system.entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, String> 
 
 
     List<Enrollment> findByEmployeeId(String employeeId);
+
+    List<Enrollment> findByEmployee(Employee employee);
 }

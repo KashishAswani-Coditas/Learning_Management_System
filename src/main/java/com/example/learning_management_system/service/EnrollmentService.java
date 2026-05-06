@@ -53,17 +53,25 @@ public class EnrollmentService {
         // authorization logic
         boolean isAllowed = false;
 
+
         if(admin != null){
             isAllowed = true;
-        }else if (loggedEmployee != null){
-            //need to check if the employee is the employee itself or the manager
+
+        } else if (loggedEmployee != null){
+
+            // employee enrolling himself
             if(loggedEmployee.getId().equals(targetedEmployee.getId())){
-                //that means it is employee itself
                 isAllowed = true;
-            } else if (targetedEmployee.getManager() != null && targetedEmployee.getManager().getId().equals(loggedEmployee.getManager().getId())) {
+
+                // manager enrolling subordinate
+            } else if (
+                    targetedEmployee.getManager() != null &&
+                            targetedEmployee.getManager().getId().equals(loggedEmployee.getId())
+            ) {
                 isAllowed = true;
             }
         }
+
 
         if(!isAllowed){
             throw new RuntimeException("Unauthorised enrollment attempt..");

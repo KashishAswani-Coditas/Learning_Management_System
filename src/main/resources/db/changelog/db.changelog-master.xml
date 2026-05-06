@@ -63,7 +63,7 @@
 
 <!--    MODULE TABLE-->
     <changeSet id="5" author="kashish">
-        <createTable tableName="module">
+        <createTable tableName="course_module">
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -75,7 +75,7 @@
 <!--FK for module-->
     <changeSet id="6" author="kashish">
         <addForeignKeyConstraint
-                baseTableName="module"
+                baseTableName="course_module"
                 baseColumnNames="course_id"
                 referencedTableName="course"
                 referencedColumnNames="id"
@@ -94,7 +94,7 @@
         <addForeignKeyConstraint
                 baseTableName="module_youtube_links"
                 baseColumnNames="module_id"
-                referencedTableName="module"
+                referencedTableName="course_module"
                 referencedColumnNames="id"
                 constraintName="fk_module_links"/>
     </changeSet>
@@ -213,7 +213,7 @@
         <addForeignKeyConstraint
                 baseTableName="module_progress"
                 baseColumnNames="module_id"
-                referencedTableName="module"
+                referencedTableName="course_module"
                 referencedColumnNames="id"
                 constraintName="fk_module_progress_module"/>
     </changeSet>
@@ -226,5 +226,21 @@
         <addColumn tableName="certificate">
             <column name="issued_date" type="TIMESTAMP"/>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="unique-course-name" author="kashish">
+        <addUniqueConstraint
+                tableName="course"
+                columnNames="name"
+                constraintName="uk_course_name"/>
+    </changeSet>
+
+    <changeSet id="unique-module-course" author="kashish">
+
+        <addUniqueConstraint
+                tableName="course_module"
+                columnNames="module_name, course_id"
+                constraintName="uk_module_course"/>
+
     </changeSet>
 </databaseChangeLog>

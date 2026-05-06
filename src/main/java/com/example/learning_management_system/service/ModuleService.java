@@ -24,12 +24,18 @@ public class ModuleService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(()-> new RuntimeException("Course Not Found Exception"));
 
+        if (moduleRepository.existsByModuleNameAndCourseId(moduleRequestDTO.getModuleName(), courseId)){
+            throw new RuntimeException("Module in this course already exists");
+        }
+
         CourseModule module = CourseModule.builder()
                 .id(UUID.randomUUID().toString())
                 .moduleName(moduleRequestDTO.getModuleName())
                 .course(course)
-                .youtubeLink(moduleRequestDTO.getYoutubeLinks())
+                .youtubeLinks(moduleRequestDTO.getYoutubeLinks())
                 .build();
+
+        moduleRepository.save(module);
 
         return moduleMapper.toDto(module);
     }
@@ -38,11 +44,16 @@ public class ModuleService {
         CourseModule module = moduleRepository.findById(moduleId)
                 .orElseThrow(() -> new RuntimeException("Module Not Found"));
 
+        if(!module.getModuleName().equals(moduleRequestDTO.getModuleName())
+        && moduleRepository.existsByModuleNameAndCourseId(moduleRequestDTO.getModuleName(), module.getCourse().getId())){
+            throw new RuntimeException("Module already exits!");
+        }
+
         if(moduleRequestDTO.getModuleName() != null){
             module.setModuleName(moduleRequestDTO.getModuleName());
         }
         if(moduleRequestDTO.getYoutubeLinks() != null){
-            module.setYoutubeLink(moduleRequestDTO.getYoutubeLinks());
+            module.setYoutubeLinks(moduleRequestDTO.getYoutubeLinks());
         }
 
         return moduleMapper.toDto(moduleRepository.save(module));

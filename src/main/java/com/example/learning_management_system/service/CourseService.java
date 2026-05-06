@@ -28,6 +28,9 @@ public class CourseService {
 
     public CourseResponseDTO addCourse(CourseRequestDTO courseDto) {
         Course originalCourse = courseMapper.toEntity(courseDto);
+        if(courseRepository.existsByName(courseDto.getName())){
+            throw new RuntimeException("Course already exists!!");
+        }
         originalCourse.setId(UUID.randomUUID().toString());
         return courseMapper.toDto(courseRepository.save(originalCourse));
     }

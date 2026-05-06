@@ -8,6 +8,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
     Course toEntity(CourseRequestDTO courseRequestDTO);
+
+//    @Mapping(source = "modules.youtubeLink", target = "modules.youtubeLinks")
     CourseResponseDTO toDto(Course course);
 
     @BeanMapping(nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE)

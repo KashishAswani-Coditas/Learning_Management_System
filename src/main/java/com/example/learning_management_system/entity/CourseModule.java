@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@Table(name = "module")
+@Table(name = "course_module")
 public class CourseModule {
 
     @Id
@@ -27,6 +27,6 @@ public class CourseModule {
     @ElementCollection
     @CollectionTable(name = "module_youtube_links", joinColumns = @JoinColumn(name = "module_id"))
     @Column(name = "youtube_link")
-    private List<String> youtubeLink;
+    private List<String> youtubeLinks;
 
 }
