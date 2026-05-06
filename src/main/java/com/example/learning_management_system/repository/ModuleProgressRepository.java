@@ -14,8 +14,5 @@ public interface ModuleProgressRepository extends JpaRepository<ModuleProgress, 
 
     long countByEmployeeIdAndModule_Course_IdAndStatus(String employeeId, String courseId, ProgressStatus status);
 
-    long countByEmployeeIdAndModuleCourseIdAndCompletedTrue(
-            String employeeId,
-            String courseId
-    );
+    long countByEmployeeIdAndModuleCourseIdAndStatus(String employeeId, String moduleCourseId, ProgressStatus status);
 }

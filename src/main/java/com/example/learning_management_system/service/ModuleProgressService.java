@@ -62,6 +62,9 @@ public class ModuleProgressService {
         //or else just update the status
         progress.setStatus(requestDTO.getStatus());
 
+
+        progress = moduleProgressRepository.save(progress);
+
 //        update the enrollment status as per progress
         updateEnrollmentStatus(employee.getId(), module.getCourse().getId());
 
@@ -91,9 +94,10 @@ public class ModuleProgressService {
             enrollment.setStatus(ProgressStatus.IN_PROGRESS);
         }else {
             enrollment.setStatus(ProgressStatus.COMPLETED);
+            enrollment.setEndDate(LocalDateTime.now());
         }
 
-        enrollment.setEndDate(LocalDateTime.now());
+
         enrollmentRepository.save(enrollment);
     }
 }

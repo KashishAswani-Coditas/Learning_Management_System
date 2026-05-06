@@ -55,7 +55,7 @@ public class CertificateService {
         }
 
         //check if already there
-        Optional<Certificate> existing = certificateRepository.findByEmployeeAndCourseId(employee.getId(), courseId);
+        Optional<Certificate> existing = certificateRepository.findByEmployeeIdAndCourseId(employee.getId(), courseId);
 
         if(existing.isPresent()){
             Certificate certificate = existing.get();
