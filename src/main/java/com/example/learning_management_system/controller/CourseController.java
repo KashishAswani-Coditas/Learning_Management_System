@@ -5,6 +5,7 @@ import com.example.learning_management_system.dto.responseDTO.ModuleResponseDTO;
 import com.example.learning_management_system.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class CourseController {
 
 //    all courses
     @GetMapping("/all")
-    public List<CourseResponseDTO> getAllCourse(){
-        return courseService.getAllCourses();
+    public Page<CourseResponseDTO> getAllCourse(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
+        return courseService.getAllCourses(page, size);
     }
 
 //    course with modules

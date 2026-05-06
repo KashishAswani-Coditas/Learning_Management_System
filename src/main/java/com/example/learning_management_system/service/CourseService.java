@@ -12,6 +12,9 @@ import com.example.learning_management_system.repository.CourseRepository;
 import com.example.learning_management_system.repository.ModuleRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,14 +55,16 @@ public class CourseService {
         return courseMapper.toDto(courseRepository.save(course));
     }
 
-    public List<CourseResponseDTO> getAllCourses() {
-        return courseRepository.findAll()
-                .stream()
+    public Page<CourseResponseDTO> getAllCourses(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page,size);
+
+        return courseRepository.findAll(pageable)
                 .map(course -> {
                     CourseResponseDTO dto = courseMapper.toDto(course);
                     dto.setModules(null);
                     return dto;
-                }).toList();
+                });
     }
 
     public List<ModuleResponseDTO> getModulesByCourseId(String id) {
