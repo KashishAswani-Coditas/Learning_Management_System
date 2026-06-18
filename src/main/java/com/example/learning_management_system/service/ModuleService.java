@@ -35,9 +35,7 @@ public class ModuleService {
                 .youtubeLinks(moduleRequestDTO.getYoutubeLinks())
                 .build();
 
-        moduleRepository.save(module);
-
-        return moduleMapper.toDto(module);
+        return moduleMapper.toDto(moduleRepository.save(module));
     }
 
     public ModuleResponseDTO updateModule(String moduleId, ModuleRequestDTO moduleRequestDTO) {

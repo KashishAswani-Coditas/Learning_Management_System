@@ -18,7 +18,7 @@ public class JwtService {
     private String SECRET_KEY;
 
 //    30 mins
-    private int EXPIRATION = 1000 * 60 * 30;
+    private final int EXPIRATION = 1000 * 60 * 30;
 
     private Key getKey(){
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
